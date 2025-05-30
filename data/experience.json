@@ -1,0 +1,87 @@
+[
+  {
+    "company": "TechCorp Solutions",
+    "position": "Senior Full-Stack Developer",
+    "location": "San Francisco, CA",
+    "startDate": "2022-01-01",
+    "endDate": null,
+    "current": true,
+    "description": "Lead development of enterprise web applications using modern technologies. Responsible for architecture decisions, code reviews, and mentoring junior developers.",
+    "achievements": [
+      "Led a team of 5 developers in building a customer portal that increased user engagement by 40%",
+      "Implemented microservices architecture reducing system downtime by 60%",
+      "Introduced automated testing practices improving code quality and reducing bugs by 35%",
+      "Mentored 3 junior developers who were promoted within 6 months"
+    ],
+    "technologies": ["React.js", "Node.js", "MongoDB", "AWS", "Docker", "Kubernetes", "TypeScript"],
+    "confidential": false
+  },
+  {
+    "company": "DataFlow Analytics",
+    "position": "AI/ML Engineer",
+    "location": "Remote",
+    "startDate": "2020-06-01",
+    "endDate": "2021-12-31",
+    "current": false,
+    "description": "Developed machine learning models and data pipelines for business intelligence applications. Worked on natural language processing and computer vision projects.",
+    "achievements": [
+      "Built recommendation system that increased customer retention by 25%",
+      "Developed NLP models for sentiment analysis with 92% accuracy",
+      "Created automated data pipelines processing 1TB+ daily data",
+      "Published 2 research papers on machine learning optimization techniques"
+    ],
+    "technologies": ["Python", "TensorFlow", "PyTorch", "Pandas", "Scikit-learn", "Apache Spark", "PostgreSQL"],
+    "confidential": false
+  },
+  {
+    "company": "StartupXYZ",
+    "position": "Full-Stack Developer",
+    "location": "Austin, TX",
+    "startDate": "2019-03-01",
+    "endDate": "2020-05-31",
+    "current": false,
+    "description": "Worked in a fast-paced startup environment building the core product from scratch. Involved in all aspects of development from frontend to backend and deployment.",
+    "achievements": [
+      "Built the entire web application MVP in 3 months",
+      "Implemented real-time features using WebSocket technology",
+      "Optimized database queries reducing response time by 50%",
+      "Set up CI/CD pipeline and deployment automation"
+    ],
+    "technologies": ["Vue.js", "Express.js", "MySQL", "Redis", "Docker", "Jenkins", "JavaScript"],
+    "confidential": false
+  },
+  {
+    "company": "WebDev Agency",
+    "position": "Frontend Developer",
+    "location": "New York, NY",
+    "startDate": "2018-01-01",
+    "endDate": "2019-02-28",
+    "current": false,
+    "description": "Developed responsive web applications for various clients. Focused on creating pixel-perfect designs and optimizing user experience across different devices.",
+    "achievements": [
+      "Delivered 15+ client projects with 100% on-time completion rate",
+      "Improved website loading speeds by 40% through optimization techniques",
+      "Created reusable component library used across multiple projects",
+      "Received 'Developer of the Year' award for outstanding performance"
+    ],
+    "technologies": ["HTML5", "CSS3", "JavaScript", "React.js", "Sass", "Webpack", "Git"],
+    "confidential": false
+  },
+  {
+    "company": "Freelance",
+    "position": "Web Developer",
+    "location": "Remote",
+    "startDate": "2017-01-01",
+    "endDate": "2017-12-31",
+    "current": false,
+    "description": "Provided web development services to small businesses and startups. Specialized in creating custom websites and web applications tailored to client needs.",
+    "achievements": [
+      "Completed 20+ freelance projects with average 4.9/5 client rating",
+      "Developed e-commerce solutions generating $500K+ in client revenue",
+      "Created automated workflows saving clients 10+ hours per week",
+      "Built long-term relationships with 5 recurring clients"
+    ],
+    "technologies": ["WordPress", "PHP", "MySQL", "JavaScript", "Bootstrap", "jQuery"],
+    "confidential": false
+  }
+]

@@ -1,0 +1,78 @@
+{
+  "name": "Suyash Mishra",
+  "title": "MERN Full-Stack Developer & AI Engineer",
+  "location": "MMMUT, Gorakhpur",
+  "email": "suyashmishraa983@gmail.com",
+  "phone": "+91 8957458327",
+  "website": "https://suyashmishra.netlify.app/",
+  "linkedin": "https://www.linkedin.com/in/suyash-mishra-b8667a253/",
+  "github": "https://github.com/SuyashMishr",
+  
+  "summary": "Passionate full-stack developer with 2+ years of experience building scalable web applications and AI-powered solutions. Expertise in modern JavaScript frameworks, Python, and machine learning technologies. Strong background in leading development teams and delivering high-quality software products.",
+  
+  "specializations": [
+    "Full-Stack Web Development",
+    "AI/ML Integration",
+    "Team Leadership",
+    "Performance Optimization"
+  ],
+  
+  "industries": [
+    "Technology",
+    "Healthcare",
+    "Education",
+    "Startups"
+  ],
+  
+  "achievements": [
+    "Finalist in Serve-Smart Hackathon, IIT BHU (2024-25) from 1200+ entries.",
+    "Solved 100+ DSA problems, building problem solving skills.",
+    "Achieved Code Chef rating of 1417, showcasing problem-solving skills and a strong foundation in Data Structures.",
+    "Qualified for NTSE Stage-II (National Talent Search Examination), conducted by NCERT – 2019."
+  ],
+  
+  "interests": [
+    "Artificial Intelligence",
+    "Open Source Development",
+    "Tech Innovation",
+    "Team Building",
+    "Continuous Learning",
+    "Problem Solving"
+  ],
+  
+  "availability": "Open to new opportunities",
+  "work_preference": "Remote or Hybrid",
+  "salary_range": "Competitive",
+  
+  "education": {
+    "degree": "Bachelor of Science in Computer Science",
+    "university": "Madan Mohan Malaviya University of Technology",
+    "graduation_year": "2026",
+    "gpa": "8.25/10",
+    "relevant_courses": [
+      "Data Structures and Algorithms",
+      "Software Engineering",
+      "Database Systems",
+      "Machine Learning",
+      "Web Development",
+      "Computer Networks"
+    ]
+  },
+  
+  "certifications": [
+     "Accenture Nordics - Software Engineering Job Simulation Mastering Data, Accenture",
+     "Mastering Data Structure & Algorithms using C and C++, Udemy",
+     "Winter School on Artificial Intelligence - Machine Learning & Learning Technologies, DST",
+     "Operating System: Learn Fundamentals of Operating System, Scaler"
+  ],
+  
+  "philosophy": "I believe in writing clean, maintainable code and building solutions that make a real impact. Continuous learning and collaboration are key to success in technology.",
+  
+  "fun_facts": [
+    "Built my first website at age 14",
+    "Contributed to Linux kernel documentation",
+    "Enjoys hiking and photography in spare time",
+    "Speaks 3 languages fluently",
+    "Has traveled to 15+ countries"
+  ]
+}

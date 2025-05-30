@@ -1,0 +1,207 @@
+{
+  "technical": {
+    "frontend": [
+      {
+        "name": "React.js",
+        "level": "expert",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "JavaScript",
+        "level": "expert",
+        "yearsOfExperience": 2
+      },
+      {
+        "name": "TypeScript",
+        "level": "advanced",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "HTML5",
+        "level": "expert",
+        "yearsOfExperience": 3
+      },
+      {
+        "name": "CSS3",
+        "level": "expert",
+        "yearsOfExperience": 2
+      },
+      {
+        "name": "Tailwind CSS",
+        "level": "advanced",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "Next.js",
+        "level": "advanced",
+        "yearsOfExperience": 1
+      }
+    ],
+    "backend": [
+      {
+        "name": "Node.js",
+        "level": "expert",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "Express.js",
+        "level": "expert",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "Python",
+        "level": "expert",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "Django",
+        "level": "advanced",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "FastAPI",
+        "level": "advanced",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "RESTful APIs",
+        "level": "expert",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "GraphQL",
+        "level": "intermediate",
+        "yearsOfExperience": 1
+      }
+    ],
+    "database": [
+      {
+        "name": "MongoDB",
+        "level": "expert",
+        "yearsOfExperience": 2
+      },
+      {
+        "name": "PostgreSQL",
+        "level": "beginner",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "MySQL",
+        "level": "intermediate",
+        "yearsOfExperience": 1
+      }
+    ],
+    "ai_ml": [
+      {
+        "name": "Machine Learning",
+        "level": "intermediate",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "Deep Learning",
+        "level": "intermediate",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "TensorFlow",
+        "level": "intermediate",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "PyTorch",
+        "level": "intermediate",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "Scikit-learn",
+        "level": "advanced",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "Pandas",
+        "level": "expert",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "NumPy",
+        "level": "expert",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "Hugging Face Transformers",
+        "level": "intermediate",
+        "yearsOfExperience": 1
+      }
+    ],
+    "cloud_devops": [
+      {
+        "name": "Docker",
+        "level": "advanced",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "Kubernetes",
+        "level": "intermediate",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "AWS",
+        "level": "advanced",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "Google Cloud Platform",
+        "level": "intermediate",
+        "yearsOfExperience": 1
+      }
+    ],
+    "tools": [
+      {
+        "name": "Git",
+        "level": "intermediate",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "GitHub",
+        "level": "intermediate",
+        "yearsOfExperience": 1
+      },
+      {
+        "name": "VS Code",
+        "level": "expert",
+        "yearsOfExperience": 3
+      },
+      {
+        "name": "Postman",
+        "level": "advanced",
+        "yearsOfExperience": 2
+      }
+    ]
+  },
+  "soft": [
+    "Problem Solving",
+    "Team Leadership",
+    "Communication",
+    "Project Management",
+    "Agile Methodologies",
+    "Code Review",
+    "Mentoring",
+    "Technical Writing",
+    "Presentation Skills",
+    "Cross-functional Collaboration"
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "proficiency": "native"
+    },
+    {
+      "language": "Hindi",
+      "proficiency": "native"
+    },
+    {
+      "language": "Spanish",
+      "proficiency": "conversational"
+    }
+  ]
+}
