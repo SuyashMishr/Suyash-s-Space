@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -29,12 +29,19 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // Check authentication status on mount
-  useEffect(() => {
-    checkAuthStatus();
-  }, []);
+  const logout = () => {
+    // Clear token
+    localStorage.removeItem('portfolio-token');
+    delete axios.defaults.headers.common['Authorization'];
 
-  const checkAuthStatus = async () => {
+    // Clear state
+    setUser(null);
+    setIsAuthenticated(false);
+
+    toast.success('Logged out successfully');
+  };
+
+  const checkAuthStatus = useCallback(async () => {
     try {
       const token = localStorage.getItem('portfolio-token');
       if (!token) {
@@ -55,24 +62,29 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  // Check authentication status on mount
+  useEffect(() => {
+    checkAuthStatus();
+  }, [checkAuthStatus]);
 
   const login = async (credentials) => {
     try {
       setLoading(true);
       const response = await axios.post('/auth/login', credentials);
-      
+
       if (response.data.success) {
         const { token, user } = response.data;
-        
+
         // Store token
         localStorage.setItem('portfolio-token', token);
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
+
         // Update state
         setUser(user);
         setIsAuthenticated(true);
-        
+
         toast.success('Login successful!');
         return { success: true };
       } else {
@@ -88,23 +100,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    // Clear token
-    localStorage.removeItem('portfolio-token');
-    delete axios.defaults.headers.common['Authorization'];
-    
-    // Clear state
-    setUser(null);
-    setIsAuthenticated(false);
-    
-    toast.success('Logged out successfully');
-  };
-
   const register = async (userData) => {
     try {
       setLoading(true);
       const response = await axios.post('/auth/register', userData);
-      
+
       if (response.data.success) {
         toast.success('Registration successful! Please login.');
         return { success: true };
@@ -128,12 +128,8 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     register,
-    checkAuthStatus
+    checkAuthStatus,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
