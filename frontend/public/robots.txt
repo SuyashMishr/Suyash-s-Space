@@ -1,0 +1,42 @@
+# CONFIDENTIAL PORTFOLIO WEBSITE
+# This website contains private and confidential information
+# Unauthorized access, indexing, or crawling is strictly prohibited
+
+User-agent: *
+Disallow: /
+
+# Explicitly disallow all major search engines
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+User-agent: Slurp
+Disallow: /
+
+User-agent: DuckDuckBot
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: YandexBot
+Disallow: /
+
+User-agent: facebookexternalhit
+Disallow: /
+
+User-agent: Twitterbot
+Disallow: /
+
+User-agent: LinkedInBot
+Disallow: /
+
+# No sitemap provided intentionally
+# Sitemap:
+
+# Additional security notice
+# This is a private portfolio website
+# All content is confidential and proprietary
+# Contact: suyashmishraa983@gmail.com for authorized access
