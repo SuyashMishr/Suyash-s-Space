@@ -33,9 +33,9 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:5000",
-        os.getenv("FRONTEND_URL", "http://localhost:3000")
+        "https://suyashspace.netlify.app",
+        "https://suyashspace.netlify.app",
+        os.getenv("FRONTEND_URL", "https://suyashspace.netlify.app")
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST"],

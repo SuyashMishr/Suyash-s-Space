@@ -28,61 +28,61 @@
     "tags": ["AI", "Full-Stack", "Security", "MERN", "Chatbot"]
   },
   {
-    "title": "E-commerce Analytics Dashboard",
-    "description": "Real-time analytics dashboard for e-commerce businesses with ML-powered insights",
-    "longDescription": "Built a comprehensive analytics platform that processes e-commerce data in real-time, providing actionable insights through machine learning algorithms. Features include sales forecasting, customer segmentation, and inventory optimization.",
-    "technologies": ["React.js", "Python", "Django", "PostgreSQL", "Redis", "Celery", "Chart.js", "AWS"],
-    "category": "data",
-    "status": "completed",
-    "featured": true,
-    "challenges": [
-      "Processing large volumes of real-time data",
-      "Creating accurate ML models for forecasting",
-      "Designing intuitive data visualizations",
-      "Ensuring system scalability"
-    ],
-    "solutions": [
-      "Implemented Redis for caching and Celery for background tasks",
-      "Used ensemble methods for improved prediction accuracy",
-      "Created interactive charts with drill-down capabilities",
-      "Deployed on AWS with auto-scaling groups"
-    ],
-    "learnings": [
-      "Real-time data processing techniques",
-      "Advanced machine learning model deployment",
-      "Data visualization best practices",
-      "Cloud infrastructure management"
-    ],
-    "tags": ["Analytics", "Machine Learning", "Real-time", "E-commerce", "AWS"]
-  },
-  {
-    "title": "Task Management Mobile App",
-    "description": "Cross-platform mobile application for team task management with offline capabilities",
-    "longDescription": "Developed a feature-rich task management application using React Native with offline-first architecture. Includes real-time collaboration, file attachments, and advanced project tracking capabilities.",
-    "technologies": ["React Native", "Node.js", "MongoDB", "Socket.io", "Redux", "AsyncStorage"],
-    "category": "mobile",
-    "status": "completed",
-    "featured": false,
-    "challenges": [
-      "Implementing offline-first architecture",
-      "Synchronizing data across multiple devices",
-      "Optimizing performance for mobile devices",
-      "Managing complex state with real-time updates"
-    ],
-    "solutions": [
-      "Used AsyncStorage with sync mechanisms",
-      "Implemented conflict resolution algorithms",
-      "Added lazy loading and image optimization",
-      "Utilized Redux with middleware for state management"
-    ],
-    "learnings": [
-      "Mobile app development best practices",
-      "Offline-first application architecture",
-      "Real-time synchronization strategies",
-      "Cross-platform development challenges"
-    ],
-    "tags": ["Mobile", "React Native", "Offline", "Real-time", "Collaboration"]
-  },
+  "title": "AyurvaBot",
+  "description": "AI-powered Ayurveda consultation chatbot using Hugging Face models",
+  "longDescription": "Developed an intelligent chatbot that provides personalized Ayurvedic health consultations by leveraging a fine-tuned Hugging Face transformer model trained on comprehensive Ayurveda datasets. The bot analyzes user symptoms and health concerns to recommend traditional Ayurvedic treatments, herbs, and lifestyle modifications based on ancient principles and modern NLP techniques.",
+  "technologies": ["Python", "Hugging Face Transformers", "PyTorch", "FastAPI", "React.js", "Docker", "MongoDB", "Natural Language Processing"],
+  "category": "ai",
+  "status": "completed",
+  "featured": true,
+  "challenges": [
+    "Processing and structuring traditional Ayurveda knowledge into machine-readable format",
+    "Fine-tuning language models for domain-specific medical terminology",
+    "Ensuring accurate and safe health recommendations",
+    "Handling multilingual queries and Sanskrit terminology"
+  ],
+  "solutions": [
+    "Curated and preprocessed extensive Ayurveda datasets from classical texts",
+    "Implemented custom tokenization for Sanskrit and medical terms",
+    "Added safety filters and disclaimer mechanisms for medical advice",
+    "Used multilingual BERT models for cross-language understanding"
+  ],
+  "learnings": [
+    "Domain-specific model fine-tuning techniques",
+    "Medical AI ethics and safety considerations",
+    "Traditional knowledge digitization methods",
+    "Conversational AI design patterns"
+  ],
+  "tags": ["AI/ML", "Healthcare", "Chatbot", "Ayurveda", "NLP", "Hugging Face"]
+},
+{
+  "title": "File Sharing",
+  "description": "Secure file sharing platform with drag-and-drop upload and instant download links",
+  "longDescription": "Built a full-stack file sharing application that enables users to easily upload files through an intuitive drag-and-drop interface and generate secure, shareable download links. The platform handles multiple file formats, provides upload progress tracking, and ensures secure file storage with automatic cleanup mechanisms for temporary files.",
+  "technologies": ["React.js", "Node.js", "Express.js", "MongoDB", "CSS3", "JavaScript"],
+  "category": "web",
+  "status": "completed",
+  "featured": true,
+  "challenges": [
+    "Handling large file uploads without blocking the UI",
+    "Implementing secure file storage and retrieval",
+    "Creating intuitive drag-and-drop functionality",
+    "Managing file metadata and temporary storage cleanup"
+  ],
+  "solutions": [
+    "Used Multer middleware for efficient multipart file handling",
+    "Implemented MongoDB GridFS for large file storage",
+    "Built responsive drag-and-drop zone with visual feedback",
+    "Added automatic file expiration and cleanup scheduled tasks"
+  ],
+  "learnings": [
+    "File upload optimization techniques",
+    "MongoDB GridFS for binary data storage",
+    "Drag-and-drop API implementation",
+    "Secure file sharing best practices"
+  ],
+  "tags": ["File Upload", "Full Stack", "MERN", "File Sharing", "Drag & Drop"]
+},
   {
     "title": "Automated Testing Framework",
     "description": "Comprehensive testing framework for web applications with AI-powered test generation",

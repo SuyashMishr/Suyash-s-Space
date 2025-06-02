@@ -56,7 +56,7 @@ const authLimiter = rateLimit({
 app.use(compression());
 app.use(morgan('combined'));
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || 'https://suyashspace.netlify.app',
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
@@ -70,7 +70,7 @@ app.use((req, res, next) => {
 });
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://new_user-31:k1vVfeD4rKWdsu20@cluster0.14ldhro.mongodb.net/portfolio', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

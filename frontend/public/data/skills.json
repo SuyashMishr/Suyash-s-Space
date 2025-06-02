@@ -19,7 +19,7 @@
       {
         "name": "HTML5",
         "level": "expert",
-        "yearsOfExperience": 3
+        "yearsOfExperience": 2
       },
       {
         "name": "CSS3",
@@ -78,11 +78,6 @@
       {
         "name": "MongoDB",
         "level": "expert",
-        "yearsOfExperience": 2
-      },
-      {
-        "name": "PostgreSQL",
-        "level": "beginner",
         "yearsOfExperience": 1
       },
       {
@@ -145,11 +140,6 @@
         "yearsOfExperience": 1
       },
       {
-        "name": "AWS",
-        "level": "advanced",
-        "yearsOfExperience": 1
-      },
-      {
         "name": "Google Cloud Platform",
         "level": "intermediate",
         "yearsOfExperience": 1
@@ -169,7 +159,7 @@
       {
         "name": "VS Code",
         "level": "expert",
-        "yearsOfExperience": 3
+        "yearsOfExperience": 2
       },
       {
         "name": "Postman",
@@ -198,10 +188,6 @@
     {
       "language": "Hindi",
       "proficiency": "native"
-    },
-    {
-      "language": "Spanish",
-      "proficiency": "conversational"
     }
   ]
 }
