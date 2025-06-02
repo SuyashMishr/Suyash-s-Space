@@ -1,6 +1,6 @@
 [
   {
-    "title": "AI-Powered Portfolio Website",
+    "title": "Suyash's Space",
     "description": "A full-stack MERN application with integrated AI chatbot for portfolio showcase",
     "longDescription": "Developed a comprehensive portfolio website using the MERN stack with advanced security features and an AI-powered chatbot. The application includes user authentication, content management, and real-time chat capabilities powered by a local LLM.",
     "technologies": ["React.js", "Node.js", "Express.js", "MongoDB", "Python", "FastAPI", "Transformers", "Docker", "Nginx"],
@@ -28,115 +28,111 @@
     "tags": ["AI", "Full-Stack", "Security", "MERN", "Chatbot"]
   },
   {
-    "title": "E-commerce Analytics Dashboard",
-    "description": "Real-time analytics dashboard for e-commerce businesses with ML-powered insights",
-    "longDescription": "Built a comprehensive analytics platform that processes e-commerce data in real-time, providing actionable insights through machine learning algorithms. Features include sales forecasting, customer segmentation, and inventory optimization.",
-    "technologies": ["React.js", "Python", "Django", "PostgreSQL", "Redis", "Celery", "Chart.js", "AWS"],
-    "category": "data",
-    "status": "completed",
-    "featured": true,
-    "challenges": [
-      "Processing large volumes of real-time data",
-      "Creating accurate ML models for forecasting",
-      "Designing intuitive data visualizations",
-      "Ensuring system scalability"
-    ],
-    "solutions": [
-      "Implemented Redis for caching and Celery for background tasks",
-      "Used ensemble methods for improved prediction accuracy",
-      "Created interactive charts with drill-down capabilities",
-      "Deployed on AWS with auto-scaling groups"
-    ],
-    "learnings": [
-      "Real-time data processing techniques",
-      "Advanced machine learning model deployment",
-      "Data visualization best practices",
-      "Cloud infrastructure management"
-    ],
-    "tags": ["Analytics", "Machine Learning", "Real-time", "E-commerce", "AWS"]
-  },
-  {
-    "title": "Task Management Mobile App",
-    "description": "Cross-platform mobile application for team task management with offline capabilities",
-    "longDescription": "Developed a feature-rich task management application using React Native with offline-first architecture. Includes real-time collaboration, file attachments, and advanced project tracking capabilities.",
-    "technologies": ["React Native", "Node.js", "MongoDB", "Socket.io", "Redux", "AsyncStorage"],
-    "category": "mobile",
-    "status": "completed",
-    "featured": false,
-    "challenges": [
-      "Implementing offline-first architecture",
-      "Synchronizing data across multiple devices",
-      "Optimizing performance for mobile devices",
-      "Managing complex state with real-time updates"
-    ],
-    "solutions": [
-      "Used AsyncStorage with sync mechanisms",
-      "Implemented conflict resolution algorithms",
-      "Added lazy loading and image optimization",
-      "Utilized Redux with middleware for state management"
-    ],
-    "learnings": [
-      "Mobile app development best practices",
-      "Offline-first application architecture",
-      "Real-time synchronization strategies",
-      "Cross-platform development challenges"
-    ],
-    "tags": ["Mobile", "React Native", "Offline", "Real-time", "Collaboration"]
-  },
-  {
-    "title": "Automated Testing Framework",
-    "description": "Comprehensive testing framework for web applications with AI-powered test generation",
-    "longDescription": "Created an intelligent testing framework that automatically generates test cases using machine learning. The system analyzes application behavior and creates comprehensive test suites with minimal manual intervention.",
-    "technologies": ["Python", "Selenium", "PyTest", "TensorFlow", "Docker", "Jenkins", "Allure"],
-    "category": "other",
-    "status": "completed",
-    "featured": false,
-    "challenges": [
-      "Generating meaningful test cases automatically",
-      "Handling dynamic web content",
-      "Reducing false positive test failures",
-      "Integrating with existing CI/CD pipelines"
-    ],
-    "solutions": [
-      "Trained ML models on successful test patterns",
-      "Implemented smart wait strategies and element detection",
-      "Added intelligent retry mechanisms and result analysis",
-      "Created Jenkins plugins for seamless integration"
-    ],
-    "learnings": [
-      "Test automation best practices",
-      "Machine learning for software testing",
-      "CI/CD pipeline optimization",
-      "Quality assurance methodologies"
-    ],
-    "tags": ["Testing", "Automation", "AI", "CI/CD", "Quality Assurance"]
-  },
-  {
-    "title": "Blockchain Voting System",
-    "description": "Secure and transparent voting system built on blockchain technology",
-    "longDescription": "Developed a decentralized voting platform using blockchain technology to ensure transparency and security. Features include voter authentication, real-time vote counting, and immutable audit trails.",
-    "technologies": ["Solidity", "Web3.js", "React.js", "Node.js", "Ethereum", "IPFS", "MetaMask"],
-    "category": "web",
-    "status": "in-progress",
-    "featured": true,
-    "challenges": [
-      "Ensuring voter privacy while maintaining transparency",
-      "Handling high transaction volumes on blockchain",
-      "Creating user-friendly interfaces for non-technical users",
-      "Implementing robust security measures"
-    ],
-    "solutions": [
-      "Used zero-knowledge proofs for privacy",
-      "Implemented layer 2 scaling solutions",
-      "Designed intuitive UI with clear voting flows",
-      "Added multi-factor authentication and encryption"
-    ],
-    "learnings": [
-      "Blockchain development fundamentals",
-      "Smart contract security practices",
-      "Decentralized application architecture",
-      "Cryptographic privacy techniques"
-    ],
-    "tags": ["Blockchain", "Security", "Decentralized", "Voting", "Web3"]
-  }
+  "title": "AyurvaBot",
+  "description": "AI-powered Ayurveda consultation chatbot using Hugging Face models",
+  "longDescription": "Developed an intelligent chatbot that provides personalized Ayurvedic health consultations by leveraging a fine-tuned Hugging Face transformer model trained on comprehensive Ayurveda datasets. The bot analyzes user symptoms and health concerns to recommend traditional Ayurvedic treatments, herbs, and lifestyle modifications based on ancient principles and modern NLP techniques.",
+  "technologies": ["Python", "Hugging Face Transformers", "PyTorch", "FastAPI", "React.js", "Docker", "MongoDB", "Natural Language Processing"],
+  "category": "ai",
+  "status": "completed",
+  "featured": true,
+  "challenges": [
+    "Processing and structuring traditional Ayurveda knowledge into machine-readable format",
+    "Fine-tuning language models for domain-specific medical terminology",
+    "Ensuring accurate and safe health recommendations",
+    "Handling multilingual queries and Sanskrit terminology"
+  ],
+  "solutions": [
+    "Curated and preprocessed extensive Ayurveda datasets from classical texts",
+    "Implemented custom tokenization for Sanskrit and medical terms",
+    "Added safety filters and disclaimer mechanisms for medical advice",
+    "Used multilingual BERT models for cross-language understanding"
+  ],
+  "learnings": [
+    "Domain-specific model fine-tuning techniques",
+    "Medical AI ethics and safety considerations",
+    "Traditional knowledge digitization methods",
+    "Conversational AI design patterns"
+  ],
+  "tags": ["AI/ML", "Healthcare", "Chatbot", "Ayurveda", "NLP", "Hugging Face"]
+},
+{
+  "title": "File Sharing",
+  "description": "Secure file sharing platform with drag-and-drop upload and instant download links",
+  "longDescription": "Built a full-stack file sharing application that enables users to easily upload files through an intuitive drag-and-drop interface and generate secure, shareable download links. The platform handles multiple file formats, provides upload progress tracking, and ensures secure file storage with automatic cleanup mechanisms for temporary files.",
+  "technologies": ["React.js", "Node.js", "Express.js", "MongoDB", "CSS3", "JavaScript"],
+  "category": "web",
+  "status": "completed",
+  "featured": true,
+  "challenges": [
+    "Handling large file uploads without blocking the UI",
+    "Implementing secure file storage and retrieval",
+    "Creating intuitive drag-and-drop functionality",
+    "Managing file metadata and temporary storage cleanup"
+  ],
+  "solutions": [
+    "Used Multer middleware for efficient multipart file handling",
+    "Implemented MongoDB GridFS for large file storage",
+    "Built responsive drag-and-drop zone with visual feedback",
+    "Added automatic file expiration and cleanup scheduled tasks"
+  ],
+  "learnings": [
+    "File upload optimization techniques",
+    "MongoDB GridFS for binary data storage",
+    "Drag-and-drop API implementation",
+    "Secure file sharing best practices"
+  ],
+  "tags": ["File Upload", "Full Stack", "MERN", "File Sharing", "Drag & Drop"]
+},
+ {
+  "title": "EduSarathi - AI Teacher Assistant",
+  "description": "Adaptive AI-powered curriculum and exam generator for resource-limited schools",
+  "longDescription": "Developing a comprehensive AI teacher assistant that generates curriculum-aligned lectures and adaptive exams optimized for low-resource environments. The system uses explainable AI to create personalized assessments, supports multiple languages, and works offline-first to ensure educational accessibility in resource-constrained schools across different regions.",
+  "technologies": ["React.js", "Node.js", "Python", "BERT/T5", "MongoDB", "Express.js", "LIME/SHAP", "Natural Language Processing", "TensorFlow"],
+  "category": "ai",
+  "status": "in-progress",
+  "featured": true,
+  "currentProgress": [
+    "Question generation system implemented using fine-tuned T5/BERT models",
+    "Basic curriculum mapping and storage functionality",
+    "Backend API endpoints for curriculum management",
+    "Admin panel for curriculum file uploads"
+  ],
+  "upcomingFeatures": [
+    "Adaptive learning engine with weak-point detection",
+    "Curriculum generation aligned with CBSE/ICSE standards",
+    "Lecture plan generation system",
+    "Multilingual support (Hindi, Tamil, Spanish)",
+    "Industry trend integration for dynamic curriculum updates",
+    "Real-time feedback mechanisms"
+  ],
+  "challenges": [
+    "Optimizing AI models for low-resource environments and offline functionality",
+    "Implementing explainable AI to justify question selection and difficulty levels",
+    "Creating adaptive assessments based on individual student weaknesses",
+    "Ensuring curriculum alignment with national and state educational standards",
+    "Building multilingual support for diverse regional requirements"
+  ],
+  "solutions": [
+    "Edge-AI implementation for minimal computational power requirements",
+    "LIME/SHAP integration for explainable question generation",
+    "Student performance analysis for personalized exam creation",
+    "Comprehensive curriculum standards research and mapping",
+    "Offline-first architecture with localized content adaptability"
+  ],
+  "learnings": [
+    "Advanced NLP model fine-tuning for educational content",
+    "Explainable AI implementation in educational systems",
+    "Curriculum standards analysis and digital mapping",
+    "Edge computing optimization for resource-limited environments",
+    "Educational equity considerations in AI system design"
+  ],
+  "novelty": [
+    "First lightweight AI tool optimized for offline-first educational environments",
+    "Explainable AI system that justifies question selection and curriculum alignment",
+    "Student-specific adaptive assessment through curriculum mapping",
+    "Real-time industry trend integration for dynamic curriculum updates",
+    "Multilingual support promoting educational equality across language barriers"
+  ],
+  "tags": ["EdTech", "AI/ML", "Education", "Adaptive Learning", "Curriculum Design", "Question Generation", "Explainable AI", "Offline-First"]
+}
 ]
