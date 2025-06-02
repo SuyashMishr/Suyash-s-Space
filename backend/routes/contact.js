@@ -1,7 +1,7 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const rateLimit = require('express-rate-limit');
-
+const nodemailer = require('nodemailer');
 const router = express.Router();
 
 // Rate limiting for contact form
@@ -77,7 +77,7 @@ router.post('/', contactLimiter, contactValidation, async (req, res) => {
     // - AWS SES for email service
     // - Slack/Discord webhooks for notifications
 
-    // Simulate email sending (replace with actual implementation)
+//     // Simulate email sending (replace with actual implementation)
     const emailSent = await simulateEmailSending({
       name,
       email,
@@ -130,16 +130,11 @@ router.get('/info', (req, res) => {
   });
 });
 
-// Simulate email sending function
+
+
 async function simulateEmailSending(formData) {
   try {
-    // In a real implementation, you would use a service like:
-    
-    /*
-    // Example with Nodemailer
-    const nodemailer = require('nodemailer');
-    
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
@@ -148,7 +143,7 @@ async function simulateEmailSending(formData) {
     });
 
     const mailOptions = {
-      from: formData.email,
+      from: process.env.EMAIL_USER,
       to: 'suyashmishraa983@gmail.com',
       subject: `Portfolio Contact: ${formData.subject}`,
       html: `
@@ -157,22 +152,13 @@ async function simulateEmailSending(formData) {
         <p><strong>Email:</strong> ${formData.email}</p>
         <p><strong>Subject:</strong> ${formData.subject}</p>
         <p><strong>Message:</strong></p>
-        <p>${formData.message}</p>
+        <p>${formData.message.replace(/\n/g, '<br>')}</p>
         <hr>
         <p><small>Submitted from IP: ${formData.userIP} at ${formData.timestamp}</small></p>
       `
     };
 
     await transporter.sendMail(mailOptions);
-    return true;
-    */
-
-    // For now, just simulate success
-    console.log('Email would be sent with the following data:', formData);
-    
-    // Simulate async operation
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
     return true;
 
   } catch (error) {
