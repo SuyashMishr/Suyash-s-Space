@@ -1,6 +1,6 @@
 [
   {
-    "title": "AI-Powered Portfolio Website",
+    "title": "Suyash's Space",
     "description": "A full-stack MERN application with integrated AI chatbot for portfolio showcase",
     "longDescription": "Developed a comprehensive portfolio website using the MERN stack with advanced security features and an AI-powered chatbot. The application includes user authentication, content management, and real-time chat capabilities powered by a local LLM.",
     "technologies": ["React.js", "Node.js", "Express.js", "MongoDB", "Python", "FastAPI", "Transformers", "Docker", "Nginx"],
@@ -83,60 +83,56 @@
   ],
   "tags": ["File Upload", "Full Stack", "MERN", "File Sharing", "Drag & Drop"]
 },
-  {
-    "title": "Automated Testing Framework",
-    "description": "Comprehensive testing framework for web applications with AI-powered test generation",
-    "longDescription": "Created an intelligent testing framework that automatically generates test cases using machine learning. The system analyzes application behavior and creates comprehensive test suites with minimal manual intervention.",
-    "technologies": ["Python", "Selenium", "PyTest", "TensorFlow", "Docker", "Jenkins", "Allure"],
-    "category": "other",
-    "status": "completed",
-    "featured": false,
-    "challenges": [
-      "Generating meaningful test cases automatically",
-      "Handling dynamic web content",
-      "Reducing false positive test failures",
-      "Integrating with existing CI/CD pipelines"
-    ],
-    "solutions": [
-      "Trained ML models on successful test patterns",
-      "Implemented smart wait strategies and element detection",
-      "Added intelligent retry mechanisms and result analysis",
-      "Created Jenkins plugins for seamless integration"
-    ],
-    "learnings": [
-      "Test automation best practices",
-      "Machine learning for software testing",
-      "CI/CD pipeline optimization",
-      "Quality assurance methodologies"
-    ],
-    "tags": ["Testing", "Automation", "AI", "CI/CD", "Quality Assurance"]
-  },
-  {
-    "title": "Blockchain Voting System",
-    "description": "Secure and transparent voting system built on blockchain technology",
-    "longDescription": "Developed a decentralized voting platform using blockchain technology to ensure transparency and security. Features include voter authentication, real-time vote counting, and immutable audit trails.",
-    "technologies": ["Solidity", "Web3.js", "React.js", "Node.js", "Ethereum", "IPFS", "MetaMask"],
-    "category": "web",
-    "status": "in-progress",
-    "featured": true,
-    "challenges": [
-      "Ensuring voter privacy while maintaining transparency",
-      "Handling high transaction volumes on blockchain",
-      "Creating user-friendly interfaces for non-technical users",
-      "Implementing robust security measures"
-    ],
-    "solutions": [
-      "Used zero-knowledge proofs for privacy",
-      "Implemented layer 2 scaling solutions",
-      "Designed intuitive UI with clear voting flows",
-      "Added multi-factor authentication and encryption"
-    ],
-    "learnings": [
-      "Blockchain development fundamentals",
-      "Smart contract security practices",
-      "Decentralized application architecture",
-      "Cryptographic privacy techniques"
-    ],
-    "tags": ["Blockchain", "Security", "Decentralized", "Voting", "Web3"]
-  }
+ {
+  "title": "EduSarathi - AI Teacher Assistant",
+  "description": "Adaptive AI-powered curriculum and exam generator for resource-limited schools",
+  "longDescription": "Developing a comprehensive AI teacher assistant that generates curriculum-aligned lectures and adaptive exams optimized for low-resource environments. The system uses explainable AI to create personalized assessments, supports multiple languages, and works offline-first to ensure educational accessibility in resource-constrained schools across different regions.",
+  "technologies": ["React.js", "Node.js", "Python", "BERT/T5", "MongoDB", "Express.js", "LIME/SHAP", "Natural Language Processing", "TensorFlow"],
+  "category": "ai",
+  "status": "in-progress",
+  "featured": true,
+  "currentProgress": [
+    "Question generation system implemented using fine-tuned T5/BERT models",
+    "Basic curriculum mapping and storage functionality",
+    "Backend API endpoints for curriculum management",
+    "Admin panel for curriculum file uploads"
+  ],
+  "upcomingFeatures": [
+    "Adaptive learning engine with weak-point detection",
+    "Curriculum generation aligned with CBSE/ICSE standards",
+    "Lecture plan generation system",
+    "Multilingual support (Hindi, Tamil, Spanish)",
+    "Industry trend integration for dynamic curriculum updates",
+    "Real-time feedback mechanisms"
+  ],
+  "challenges": [
+    "Optimizing AI models for low-resource environments and offline functionality",
+    "Implementing explainable AI to justify question selection and difficulty levels",
+    "Creating adaptive assessments based on individual student weaknesses",
+    "Ensuring curriculum alignment with national and state educational standards",
+    "Building multilingual support for diverse regional requirements"
+  ],
+  "solutions": [
+    "Edge-AI implementation for minimal computational power requirements",
+    "LIME/SHAP integration for explainable question generation",
+    "Student performance analysis for personalized exam creation",
+    "Comprehensive curriculum standards research and mapping",
+    "Offline-first architecture with localized content adaptability"
+  ],
+  "learnings": [
+    "Advanced NLP model fine-tuning for educational content",
+    "Explainable AI implementation in educational systems",
+    "Curriculum standards analysis and digital mapping",
+    "Edge computing optimization for resource-limited environments",
+    "Educational equity considerations in AI system design"
+  ],
+  "novelty": [
+    "First lightweight AI tool optimized for offline-first educational environments",
+    "Explainable AI system that justifies question selection and curriculum alignment",
+    "Student-specific adaptive assessment through curriculum mapping",
+    "Real-time industry trend integration for dynamic curriculum updates",
+    "Multilingual support promoting educational equality across language barriers"
+  ],
+  "tags": ["EdTech", "AI/ML", "Education", "Adaptive Learning", "Curriculum Design", "Question Generation", "Explainable AI", "Offline-First"]
+}
 ]
