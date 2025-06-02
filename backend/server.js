@@ -138,5 +138,8 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`🔒 Confidential portfolio backend active`);
 });
+app.get('/', (req, res) => {
+  res.send('🟢 Portfolio backend is running');
+});
 
 module.exports = app;
