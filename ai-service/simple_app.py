@@ -25,7 +25,13 @@ app = FastAPI(
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4000", "http://localhost:3000"],
+    allow_origins=[
+        "https://suyashspace.netlify.app",
+        "https://suyash-s-space-1.onrender.com", 
+        "http://localhost:4000", 
+        "http://localhost:3000",
+        "http://localhost:3001"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -171,6 +177,11 @@ async def chat(
     x_api_key: Optional[str] = Header(None)
 ):
     """Main chat endpoint"""
+    # Validate API key
+    expected_key = os.getenv("AI_SERVICE_API_KEY", "maQNMghEg5rknGdTfsqjbDwSOVBeW-_FjNcPESHuH0w")
+    if x_api_key != expected_key:
+        raise HTTPException(status_code=401, detail="Invalid API key")
+    
     try:
         # Generate session ID if not provided
         session_id = request.sessionId or f"session_{int(time.time())}_{random.randint(1000, 9999)}"
