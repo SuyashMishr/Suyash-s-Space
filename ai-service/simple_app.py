@@ -161,6 +161,20 @@ def generate_response(message: str) -> tuple[str, float, List[str]]:
 # In-memory session storage (for demo purposes)
 sessions = {}
 
+@app.get("/")
+async def root():
+    """Root endpoint"""
+    return {
+        "service": "Portfolio AI Assistant",
+        "status": "running",
+        "version": "1.0.0",
+        "endpoints": {
+            "health": "/health",
+            "chat": "/chat",
+            "stats": "/stats"
+        }
+    }
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
