@@ -48,11 +48,17 @@ const ChatBot = ({ onClose }) => {
     setIsLoading(true);
 
     try {
+      // Debug: Log the API URL being used
+      console.log('Making request to:', axios.defaults.baseURL + '/chatbot/chat');
+      console.log('Environment API URL:', process.env.REACT_APP_API_URL);
+      
       const response = await axios.post('/api/chatbot/chat', {
         message: userMessage.content,
         sessionId: sessionId,
         userIP: 'web-client'
       });
+
+      console.log('Chat response:', response.data);
 
       if (response.data.success) {
         const botMessage = {
@@ -69,18 +75,24 @@ const ChatBot = ({ onClose }) => {
         throw new Error(response.data.message || 'Failed to get response');
       }
     } catch (error) {
-      console.error('Chat error:', error);
+      console.error('Chat error details:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        url: error.config?.url,
+        baseURL: axios.defaults.baseURL
+      });
       
       const errorMessage = {
         id: Date.now() + 1,
         type: 'bot',
-        content: "I'm sorry, I'm having trouble connecting right now. Please try again later or contact Suyash directly.",
+        content: `I'm sorry, I'm having trouble connecting right now. Please try again later or contact Suyash directly. (Error: ${error.response?.status || 'Network'})`,
         timestamp: new Date(),
         isError: true
       };
 
       setMessages(prev => [...prev, errorMessage]);
-      toast.error('Failed to send message');
+      toast.error(`Failed to send message: ${error.response?.status || 'Network error'}`);
     } finally {
       setIsLoading(false);
     }
