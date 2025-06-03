@@ -48,14 +48,19 @@ const ChatBot = ({ onClose }) => {
     setIsLoading(true);
 
     try {
-      // Debug: Log the API URL being used
-      console.log('Making request to:', axios.defaults.baseURL + '/chatbot/chat');
-      console.log('Environment API URL:', process.env.REACT_APP_API_URL);
+      // Use absolute URL to ensure it works
+      const apiUrl = process.env.REACT_APP_API_URL || 'https://suyash-s-space-1.onrender.com';
+      const fullUrl = `${apiUrl}/api/chatbot/chat`;
       
-      const response = await axios.post('/api/chatbot/chat', {
+      const response = await axios.post(fullUrl, {
         message: userMessage.content,
         sessionId: sessionId,
         userIP: 'web-client'
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        timeout: 30000
       });
 
       console.log('Chat response:', response.data);
@@ -75,24 +80,33 @@ const ChatBot = ({ onClose }) => {
         throw new Error(response.data.message || 'Failed to get response');
       }
     } catch (error) {
-      console.error('Chat error details:', {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-        url: error.config?.url,
-        baseURL: axios.defaults.baseURL
-      });
+      let errorType = 'Network';
+      let errorDetails = '';
+      
+      if (error.response) {
+        // Server responded with error status
+        errorType = `${error.response.status}`;
+        errorDetails = error.response.data?.message || error.response.statusText;
+      } else if (error.request) {
+        // Request was made but no response received
+        errorType = 'No Response';
+        errorDetails = 'Server did not respond';
+      } else {
+        // Something else happened
+        errorType = 'Request Failed';
+        errorDetails = error.message;
+      }
       
       const errorMessage = {
         id: Date.now() + 1,
         type: 'bot',
-        content: `I'm sorry, I'm having trouble connecting right now. Please try again later or contact Suyash directly. (Error: ${error.response?.status || 'Network'})`,
+        content: `I'm sorry, I'm having trouble connecting right now. Please try again later or contact Suyash directly. (Error: ${errorType})`,
         timestamp: new Date(),
         isError: true
       };
 
       setMessages(prev => [...prev, errorMessage]);
-      toast.error(`Failed to send message: ${error.response?.status || 'Network error'}`);
+      toast.error(`Failed to send message: ${errorType}`);
     } finally {
       setIsLoading(false);
     }
