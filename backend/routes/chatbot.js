@@ -56,7 +56,7 @@ router.post('/chat', chatbotLimiter, chatValidation, async (req, res) => {
           userIP
         },
         {
-          timeout: 30000, // 30 second timeout
+          timeout: 8000, // Reduced to 8 second timeout for faster response
           headers: {
             'Content-Type': 'application/json',
             'X-API-Key': process.env.AI_SERVICE_API_KEY || 'dev-key'

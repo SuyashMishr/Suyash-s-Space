@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Admin panel for portfolio management - Authorized access only" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <meta name="confidential" content="true" />
+    
+    <!-- Simple script to suppress extension errors -->
+    <script>
+      // Comprehensive browser extension error suppression
+      const originalError = console.error;
+      const originalWarn = console.warn;
+      const originalLog = console.log;
+      
+      // Suppress console errors
+      console.error = function(...args) {
+        const message = args.join(' ');
+        // Filter out extension-related errors and connection issues
+        if (message.includes('runtime.lastError') ||
+            message.includes('utils.js') ||
+            message.includes('extensionState.js') ||
+            message.includes('heuristicsRedefinitions.js') ||
+            message.includes('message port closed') ||
+            message.includes('Could not establish connection') ||
+            message.includes('Receiving end does not exist') ||
+            message.includes('ERR_FILE_NOT_FOUND') ||
+            message.includes('ERR_CONNECTION_REFUSED') ||
+            message.includes('chrome-extension://') ||
+            message.includes('Failed to load resource') ||
+            message.includes('extension')) {
+          return; // Suppress these errors
+        }
+        originalError.apply(console, args);
+      };
+      
+      // Suppress console warnings
+      console.warn = function(...args) {
+        const message = args.join(' ');
+        if (message.includes('extension') ||
+            message.includes('chrome-extension://') ||
+            message.includes('runtime.lastError')) {
+          return;
+        }
+        originalWarn.apply(console, args);
+      };
+      
+      // Suppress network resource loading errors
+      window.addEventListener('error', function(e) {
+        if (e.filename && (
+            e.filename.includes('utils.js') ||
+            e.filename.includes('extensionState.js') ||
+            e.filename.includes('heuristicsRedefinitions.js') ||
+            e.filename.includes('chrome-extension://') ||
+            e.message.includes('ERR_FILE_NOT_FOUND') ||
+            e.message.includes('Failed to load resource')
+        )) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+      }, true);
+      
+      // Global unhandled promise rejection handler
+      window.addEventListener('unhandledrejection', function(e) {
+        if (e.reason && typeof e.reason === 'object') {
+          const message = e.reason.message || e.reason.toString();
+          if (message.includes('runtime.lastError') ||
+              message.includes('extension') ||
+              message.includes('chrome-extension://')) {
+            e.preventDefault();
+            return false;
+          }
+        }
+      });
+      
+      // Force refresh images with CORS errors
+      window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          const images = document.querySelectorAll('img[src*="localhost:4000"]');
+          images.forEach(function(img) {
+            // Set crossorigin attribute to anonymous for CORS
+            img.crossOrigin = 'anonymous';
+            const originalSrc = img.src;
+            img.src = '';
+            setTimeout(function() {
+              img.src = originalSrc + (originalSrc.includes('?') ? '&' : '?') + '_t=' + Date.now();
+            }, 100);
+          });
+        }, 1000);
+      });
+    </script>
+    
+    <title>Portfolio Admin Panel - Secure Access</title>
+    
+    <!-- Prevent caching of sensitive content -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h1>JavaScript Required</h1>
+        <p>This admin panel requires JavaScript to function properly.</p>
+        <p>Please enable JavaScript in your browser and refresh the page.</p>
+        <hr style="margin: 20px 0;">
+        <small style="color: #666;">CONFIDENTIAL - Admin Access Only</small>
+      </div>
+    </noscript>
+    <div id="root"></div>
+  </body>
+</html>

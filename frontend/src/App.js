@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Toaster } from 'react-hot-toast';
 
@@ -18,16 +18,60 @@ import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
 import Resume from './pages/Resume';
 import Contact from './pages/Contact';
-import Admin from './pages/Admin';
-import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 
 // Context
 import { ThemeProvider } from './context/ThemeContext';
-import { AuthProvider } from './context/AuthContext';
 
 // Styles
 import './index.css';
+
+// Layout component for consistent page structure
+const Layout = () => (
+  <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+    {/* Confidential Watermark */}
+    <ConfidentialWatermark />
+
+    {/* Navigation */}
+    <Navbar />
+
+    {/* Main Content */}
+    <main className="flex-grow">
+      <Outlet />
+    </main>
+
+    {/* Footer */}
+    <Footer />
+
+    {/* Scroll to Top Button */}
+    <ScrollToTop />
+  </div>
+);
+
+// Router configuration with future flags
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "about", element: <About /> },
+      { path: "projects", element: <Projects /> },
+      { path: "projects/:id", element: <ProjectDetail /> },
+      { path: "resume", element: <Resume /> },
+      { path: "contact", element: <Contact /> },
+      { path: "*", element: <NotFound /> },
+    ],
+  },
+], {
+  future: {
+    v7_startTransition: true,
+    v7_relativeSplatPath: true,
+    v7_normalizeFormMethod: true,
+    v7_partialHydration: true,
+    v7_skipActionErrorRevalidation: true,
+  },
+});
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -64,87 +108,56 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-        <LoadingSpinner size="lg" />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <LoadingSpinner size="xl" text="Loading Suyash's Portfolio..." />
       </div>
     );
   }
 
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <ErrorBoundary>
-          <div className="min-h-screen">
-            <Helmet>
-              <title>Suyash Mishra - Portfolio (Confidential)</title>
-              <meta name="description" content="Confidential portfolio website showcasing professional work and experience." />
-              <meta name="viewport" content="width=device-width, initial-scale=1" />
-              <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
-              <meta name="confidential" content="true" />
-              <meta property="og:title" content="Portfolio - Confidential" />
-              <meta property="og:description" content="Confidential portfolio website" />
-              <meta property="og:type" content="website" />
-              <link rel="canonical" href={window.location.href} />
-            </Helmet>
+      <ErrorBoundary>
+        <div className="min-h-screen">
+          <Helmet>
+            <title>Suyash Mishra - Portfolio (Confidential)</title>
+            <meta name="description" content="Confidential portfolio website showcasing professional work and experience." />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+            <meta name="confidential" content="true" />
+            <meta property="og:title" content="Portfolio - Confidential" />
+            <meta property="og:description" content="Confidential portfolio website" />
+            <meta property="og:type" content="website" />
+            <link rel="canonical" href={window.location.href} />
+          </Helmet>
 
-            <Router>
-              <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
-                {/* Confidential Watermark */}
-                <ConfidentialWatermark />
+          <RouterProvider router={router} />
 
-                {/* Navigation */}
-                <Navbar />
-
-                {/* Main Content */}
-                <main className="flex-grow">
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/projects" element={<Projects />} />
-                    <Route path="/projects/:id" element={<ProjectDetail />} />
-                    <Route path="/resume" element={<Resume />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/admin/*" element={<Admin />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </main>
-
-                {/* Footer */}
-                <Footer />
-
-                {/* Scroll to Top Button */}
-                <ScrollToTop />
-              </div>
-            </Router>
-
-            {/* Toast Notifications */}
-            <Toaster
-              position="top-right"
-              toastOptions={{
-                duration: 4000,
-                style: {
-                  background: 'var(--toast-bg)',
-                  color: 'var(--toast-color)',
-                  border: '1px solid var(--toast-border)',
+          {/* Toast Notifications */}
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: 'var(--toast-bg)',
+                color: 'var(--toast-color)',
+                border: '1px solid var(--toast-border)',
+              },
+              success: {
+                iconTheme: {
+                  primary: '#10b981',
+                  secondary: '#ffffff',
                 },
-                success: {
-                  iconTheme: {
-                    primary: '#10b981',
-                    secondary: '#ffffff',
-                  },
+              },
+              error: {
+                iconTheme: {
+                  primary: '#ef4444',
+                  secondary: '#ffffff',
                 },
-                error: {
-                  iconTheme: {
-                    primary: '#ef4444',
-                    secondary: '#ffffff',
-                  },
-                },
-              }}
-            />
-          </div>
-        </ErrorBoundary>
-      </AuthProvider>
+              },
+            }}
+          />
+        </div>
+      </ErrorBoundary>
     </ThemeProvider>
   );
 }

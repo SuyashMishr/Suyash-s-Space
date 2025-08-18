@@ -4,6 +4,13 @@ import { Mail, Phone, MapPin, Send, Github, Linkedin, CheckCircle } from 'lucide
 import toast from 'react-hot-toast';
 import axios from 'axios';
 
+// Configure axios for the contact form
+const api = axios.create({
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:4000',
+  withCredentials: true,
+  timeout: 10000
+});
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -26,7 +33,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('/api/contact', formData);
+      const response = await api.post('/api/contact', formData);
       
       if (response.data.success) {
         setIsSubmitted(true);

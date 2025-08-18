@@ -121,42 +121,93 @@ RESPONSE_TEMPLATES = {
     ]
 }
 
+# Pre-compiled response cache for instant responses
+RESPONSE_CACHE = {}
+
 def generate_response(message: str) -> tuple[str, float, List[str]]:
-    """Generate a response based on the input message"""
-    message_lower = message.lower()
+    """Generate a response based on the input message with caching"""
+    message_lower = message.lower().strip()
+    
+    # Check cache first for instant response
+    if message_lower in RESPONSE_CACHE:
+        return RESPONSE_CACHE[message_lower]
 
-    # Simple keyword matching
-    if any(word in message_lower for word in ["hello", "hi", "hey", "greetings"]):
+    # Enhanced keyword matching with more specific responses
+    if any(word in message_lower for word in ["hello", "hi", "hey", "greetings", "start"]):
         response = random.choice(RESPONSE_TEMPLATES["greeting"])
+        confidence = 0.95
+        sources = ["AI Assistant"]
+
+    elif any(word in message_lower for word in ["skill", "technology", "tech", "programming", "development", "language", "framework"]):
+        # Get specific skills from portfolio data
+        skills_info = []
+        if PORTFOLIO_DATA.get('skills', {}).get('technical'):
+            for category, skills in PORTFOLIO_DATA['skills']['technical'].items():
+                if skills:
+                    skill_names = [skill.get('name', skill) if isinstance(skill, dict) else skill for skill in skills]
+                    skills_info.append(f"{category}: {', '.join(skill_names[:3])}")
+        
+        if skills_info:
+            response = f"Suyash's technical skills include {'; '.join(skills_info[:3])}. He specializes in full-stack development with modern technologies."
+        else:
+            response = random.choice(RESPONSE_TEMPLATES["skills"])
         confidence = 0.9
-        sources = ["greeting_template"]
+        sources = ["Skills Section"]
 
-    elif any(word in message_lower for word in ["skill", "technology", "tech", "programming", "development"]):
-        response = random.choice(RESPONSE_TEMPLATES["skills"])
-        confidence = 0.8
-        sources = ["skills_data", "general_info"]
-
-    elif any(word in message_lower for word in ["project", "work", "portfolio", "application", "app"]):
-        response = random.choice(RESPONSE_TEMPLATES["projects"])
-        confidence = 0.8
-        sources = ["projects_data"]
-
-    elif any(word in message_lower for word in ["experience", "background", "education", "qualification"]):
-        response = random.choice(RESPONSE_TEMPLATES["experience"])
-        confidence = 0.8
-        sources = ["experience_data", "education_data"]
-
-    elif any(word in message_lower for word in ["contact", "email", "reach", "connect", "linkedin"]):
-        response = random.choice(RESPONSE_TEMPLATES["contact"])
+    elif any(word in message_lower for word in ["project", "work", "portfolio", "application", "app", "built", "created"]):
+        # Get specific project info
+        if PORTFOLIO_DATA.get('projects') and len(PORTFOLIO_DATA['projects']) > 0:
+            project_count = len(PORTFOLIO_DATA['projects'])
+            featured_project = PORTFOLIO_DATA['projects'][0]
+            response = f"Suyash has worked on {project_count} projects. One notable project is '{featured_project.get('title', 'a web application')}' - {featured_project.get('description', 'a full-stack application')[:100]}... Visit the Projects section for complete details."
+        else:
+            response = random.choice(RESPONSE_TEMPLATES["projects"])
         confidence = 0.9
-        sources = ["contact_info"]
+        sources = ["Projects Section"]
+
+    elif any(word in message_lower for word in ["experience", "background", "education", "qualification", "career", "job"]):
+        # Get specific experience info
+        if PORTFOLIO_DATA.get('experience') and len(PORTFOLIO_DATA['experience']) > 0:
+            exp = PORTFOLIO_DATA['experience'][0]
+            response = f"Suyash has experience as {exp.get('position', 'a developer')} at {exp.get('company', 'various organizations')}. {exp.get('description', 'He has worked on various projects and gained valuable experience.')[:100]}... Check the Resume section for complete details."
+        else:
+            response = random.choice(RESPONSE_TEMPLATES["experience"])
+        confidence = 0.9
+        sources = ["Resume Section"]
+
+    elif any(word in message_lower for word in ["contact", "email", "reach", "connect", "linkedin", "hire", "opportunity"]):
+        contact_email = PORTFOLIO_DATA.get('general', {}).get('email', 'suyashmishraa983@gmail.com')
+        response = f"You can contact Suyash at {contact_email} or use the contact form on this website. He's always open to discussing new opportunities and collaborations!"
+        confidence = 0.95
+        sources = ["Contact Section"]
+
+    elif any(word in message_lower for word in ["ai", "artificial intelligence", "machine learning", "ml", "data science"]):
+        response = "Suyash has extensive experience with AI/ML technologies including Python, TensorFlow, PyTorch, and data analysis. He's worked on various AI projects and integrations. Check his projects for AI-related work!"
+        confidence = 0.9
+        sources = ["Skills Section", "Projects Section"]
+
+    elif any(word in message_lower for word in ["react", "javascript", "node", "python", "mongodb", "web development"]):
+        response = "Suyash is proficient in modern web development technologies including React, Node.js, Python, MongoDB, and the full MERN stack. He builds scalable, responsive web applications with clean, maintainable code."
+        confidence = 0.9
+        sources = ["Skills Section"]
 
     else:
         response = random.choice(RESPONSE_TEMPLATES["default"])
-        confidence = 0.6
-        sources = ["default_template"]
+        confidence = 0.7
+        sources = ["AI Assistant"]
 
-    return response, confidence, sources
+    # Cache the response for future use
+    result = (response, confidence, sources)
+    RESPONSE_CACHE[message_lower] = result
+    
+    # Keep cache size manageable
+    if len(RESPONSE_CACHE) > 100:
+        # Remove oldest entries
+        keys_to_remove = list(RESPONSE_CACHE.keys())[:25]
+        for key in keys_to_remove:
+            del RESPONSE_CACHE[key]
+
+    return result
 
 # In-memory session storage (for demo purposes)
 sessions = {}
@@ -192,7 +243,7 @@ async def chat(
 ):
     """Main chat endpoint"""
     # Validate API key
-    expected_key = os.getenv("AI_SERVICE_API_KEY", "maQNMghEg5rknGdTfsqjbDwSOVBeW-_FjNcPESHuH0w")
+    expected_key = os.getenv("AI_SERVICE_API_KEY", "dev-key")
     if x_api_key != expected_key:
         raise HTTPException(status_code=401, detail="Invalid API key")
     

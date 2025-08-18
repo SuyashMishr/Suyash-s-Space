@@ -40,14 +40,44 @@ const userSchema = new mongoose.Schema({
   },
   lockUntil: {
     type: Date
+  },
+  // Profile fields
+  fullName: {
+    type: String,
+    trim: true
+  },
+  bio: {
+    type: String,
+    trim: true,
+    maxlength: 500
+  },
+  position: {
+    type: String,
+    trim: true
+  },
+  location: {
+    type: String,
+    trim: true
+  },
+  phone: {
+    type: String,
+    trim: true
+  },
+  website: {
+    type: String,
+    trim: true
+  },
+  profilePhoto: {
+    type: String,
+    trim: true
+  },
+  resume: {
+    type: String,
+    trim: true
   }
 }, {
   timestamps: true
 });
-
-// Index for performance
-userSchema.index({ email: 1 });
-userSchema.index({ username: 1 });
 
 // Virtual for account lock status
 userSchema.virtual('isLocked').get(function() {

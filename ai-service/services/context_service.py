@@ -5,6 +5,8 @@ from typing import Dict, List, Optional
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
+from functools import lru_cache
+import asyncio
 
 logger = logging.getLogger(__name__)
 
@@ -14,6 +16,8 @@ class ContextService:
         self.embeddings = None
         self.embedding_model = None
         self.model_name = "all-MiniLM-L6-v2"  # Lightweight sentence transformer
+        self.query_cache = {}  # Cache for query embeddings
+        self.similarity_cache = {}  # Cache for similarity results
         
     async def load_context(self):
         """Load context data and create embeddings"""
@@ -199,33 +203,97 @@ class ContextService:
             logger.error(f"❌ Failed to create embeddings: {e}")
             raise
     
+    @lru_cache(maxsize=50)
+    def _get_cached_query_embedding(self, query: str) -> Optional[np.ndarray]:
+        """Get cached query embedding"""
+        return self.query_cache.get(query)
+    
+    def _cache_query_embedding(self, query: str, embedding: np.ndarray):
+        """Cache query embedding"""
+        self.query_cache[query] = embedding
+        # Keep cache size manageable
+        if len(self.query_cache) > 100:
+            # Remove oldest entries
+            keys_to_remove = list(self.query_cache.keys())[:25]
+            for key in keys_to_remove:
+                del self.query_cache[key]
+
     async def get_relevant_context(self, query: str, top_k: int = 3) -> List[Dict]:
-        """Get relevant context for a query"""
+        """Get relevant context for a query with caching and optimizations"""
         try:
             if not self.embeddings or not self.context_data:
-                return []
+                return self._get_fallback_context(query)
             
-            # Encode query
-            query_embedding = self.embedding_model.encode([query])
+            # Check similarity cache first
+            cache_key = f"{query}_{top_k}"
+            if cache_key in self.similarity_cache:
+                logger.info("Returning cached similarity results")
+                return self.similarity_cache[cache_key]
             
-            # Calculate similarities
-            similarities = cosine_similarity(query_embedding, self.embeddings)[0]
+            # Get or create query embedding
+            query_embedding = self._get_cached_query_embedding(query)
+            if query_embedding is None:
+                # Run embedding in executor to avoid blocking
+                query_embedding = await asyncio.get_event_loop().run_in_executor(
+                    None, 
+                    lambda: self.embedding_model.encode([query])
+                )
+                self._cache_query_embedding(query, query_embedding)
+            else:
+                query_embedding = np.array([query_embedding])
+            
+            # Calculate similarities with timeout
+            similarities = await asyncio.wait_for(
+                asyncio.get_event_loop().run_in_executor(
+                    None,
+                    lambda: cosine_similarity(query_embedding, self.embeddings)[0]
+                ),
+                timeout=2.0  # 2 second timeout for similarity calculation
+            )
             
             # Get top-k most similar items
             top_indices = np.argsort(similarities)[-top_k:][::-1]
             
             relevant_context = []
             for idx in top_indices:
-                if similarities[idx] > 0.3:  # Minimum similarity threshold
+                if similarities[idx] > 0.25:  # Slightly lower threshold for more results
                     context_item = self.context_data[idx].copy()
                     context_item["similarity"] = float(similarities[idx])
                     relevant_context.append(context_item)
             
+            # Cache the result
+            self.similarity_cache[cache_key] = relevant_context
+            if len(self.similarity_cache) > 200:
+                # Remove oldest entries
+                keys_to_remove = list(self.similarity_cache.keys())[:50]
+                for key in keys_to_remove:
+                    del self.similarity_cache[key]
+            
             return relevant_context
             
+        except asyncio.TimeoutError:
+            logger.warning("Context similarity calculation timed out, using fallback")
+            return self._get_fallback_context(query)
         except Exception as e:
             logger.error(f"Error getting relevant context: {e}")
-            return []
+            return self._get_fallback_context(query)
+    
+    def _get_fallback_context(self, query: str) -> List[Dict]:
+        """Get fallback context based on simple keyword matching"""
+        query_lower = query.lower()
+        fallback_context = []
+        
+        # Simple keyword-based context selection
+        for item in self.context_data[:5]:  # Only check first 5 items for speed
+            content_lower = item.get('content', '').lower()
+            if any(word in content_lower for word in query_lower.split()):
+                fallback_item = item.copy()
+                fallback_item["similarity"] = 0.5  # Default similarity
+                fallback_context.append(fallback_item)
+                if len(fallback_context) >= 3:
+                    break
+        
+        return fallback_context
     
     def is_loaded(self) -> bool:
         """Check if context is loaded"""

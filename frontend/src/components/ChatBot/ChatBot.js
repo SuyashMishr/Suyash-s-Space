@@ -43,9 +43,20 @@ const ChatBot = ({ onClose }) => {
       timestamp: new Date()
     };
 
+    // Add user message and show typing indicator immediately
     setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
     setIsLoading(true);
+
+    // Add typing indicator message
+    const typingMessage = {
+      id: Date.now() + 1,
+      type: 'bot',
+      content: 'typing...',
+      timestamp: new Date(),
+      isTyping: true
+    };
+    setMessages(prev => [...prev, typingMessage]);
 
     try {
       // Use absolute URL to ensure it works
@@ -60,14 +71,14 @@ const ChatBot = ({ onClose }) => {
         headers: {
           'Content-Type': 'application/json'
         },
-        timeout: 30000
+        timeout: 10000  // Reduced to 10 second timeout
       });
 
       console.log('Chat response:', response.data);
 
       if (response.data.success) {
         const botMessage = {
-          id: Date.now() + 1,
+          id: Date.now() + 2,
           type: 'bot',
           content: response.data.response,
           timestamp: new Date(),
@@ -75,7 +86,8 @@ const ChatBot = ({ onClose }) => {
           sources: response.data.sources
         };
 
-        setMessages(prev => [...prev, botMessage]);
+        // Remove typing indicator and add actual response
+        setMessages(prev => prev.filter(msg => !msg.isTyping).concat([botMessage]));
       } else {
         throw new Error(response.data.message || 'Failed to get response');
       }
@@ -98,14 +110,15 @@ const ChatBot = ({ onClose }) => {
       }
       
       const errorMessage = {
-        id: Date.now() + 1,
+        id: Date.now() + 2,
         type: 'bot',
         content: `I'm sorry, I'm having trouble connecting right now. Please try again later or contact Suyash directly. (Error: ${errorType})`,
         timestamp: new Date(),
         isError: true
       };
 
-      setMessages(prev => [...prev, errorMessage]);
+      // Remove typing indicator and add error message
+      setMessages(prev => prev.filter(msg => !msg.isTyping).concat([errorMessage]));
       toast.error(`Failed to send message: ${errorType}`);
     } finally {
       setIsLoading(false);
@@ -211,35 +224,30 @@ const ChatBot = ({ onClose }) => {
                           <User className="w-4 h-4 mt-0.5 flex-shrink-0" />
                         )}
                         <div className="flex-1">
-                          <p className="text-sm">{message.content}</p>
-                          <p className="text-xs opacity-70 mt-1">
-                            {formatTime(message.timestamp)}
-                          </p>
-                          {message.confidence && (
-                            <p className="text-xs opacity-70">
-                              Confidence: {Math.round(message.confidence * 100)}%
-                            </p>
+                          {message.isTyping ? (
+                            <div className="flex space-x-1">
+                              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                            </div>
+                          ) : (
+                            <>
+                              <p className="text-sm">{message.content}</p>
+                              <p className="text-xs opacity-70 mt-1">
+                                {formatTime(message.timestamp)}
+                              </p>
+                              {message.confidence && (
+                                <p className="text-xs opacity-70">
+                                  Confidence: {Math.round(message.confidence * 100)}%
+                                </p>
+                              )}
+                            </>
                           )}
                         </div>
                       </div>
                     </div>
                   </div>
                 ))}
-                
-                {isLoading && (
-                  <div className="flex justify-start">
-                    <div className="bg-gray-100 dark:bg-gray-700 rounded-lg px-3 py-2">
-                      <div className="flex items-center space-x-2">
-                        <Bot className="w-4 h-4" />
-                        <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
                 
                 <div ref={messagesEndRef} />
               </div>

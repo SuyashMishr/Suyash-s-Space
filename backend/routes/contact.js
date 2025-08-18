@@ -2,15 +2,16 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const rateLimit = require('express-rate-limit');
 const nodemailer = require('nodemailer');
+const ContactMessage = require('../models/ContactMessage');
 const router = express.Router();
 
-// Rate limiting for contact form
+// Rate limiting for contact form - More reasonable limits
 const contactLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 3, // limit each IP to 3 contact form submissions per windowMs
+  max: 10, // limit each IP to 10 contact form submissions per windowMs (increased from 3)
   message: {
     success: false,
-    message: 'Too many contact form submissions, please try again later.',
+    message: 'Too many contact form submissions, please try again in a few minutes.',
     confidential: true
   }
 });
@@ -27,8 +28,9 @@ const contactValidation = [
     .normalizeEmail()
     .withMessage('Please provide a valid email address'),
   body('subject')
-    .isLength({ min: 5, max: 200 })
-    .withMessage('Subject must be between 5 and 200 characters')
+    .optional()
+    .isLength({ min: 0, max: 200 })
+    .withMessage('Subject must be less than 200 characters')
     .trim()
     .escape(),
   body('message')
@@ -55,7 +57,21 @@ router.post('/', contactLimiter, contactValidation, async (req, res) => {
 
     const { name, email, subject, message } = req.body;
     const userIP = req.ip;
+    const userAgent = req.get('User-Agent');
     const timestamp = new Date();
+
+    // Save message to database
+    const contactMessage = new ContactMessage({
+      name,
+      email,
+      subject: subject || '',
+      message,
+      userIP,
+      userAgent,
+      status: 'new'
+    });
+
+    await contactMessage.save();
 
     // Log the contact form submission
     console.log(`Contact form submission from ${userIP}:`);
@@ -64,27 +80,17 @@ router.post('/', contactLimiter, contactValidation, async (req, res) => {
     console.log(`Subject: ${subject}`);
     console.log(`Message: ${message.substring(0, 100)}...`);
     console.log(`Timestamp: ${timestamp.toISOString()}`);
+    console.log(`Saved to database with ID: ${contactMessage._id}`);
 
-    // In a real application, you would:
-    // 1. Save to database
-    // 2. Send email notification
-    // 3. Possibly integrate with a CRM system
-
-    // For now, we'll just simulate success
-    // You could integrate with services like:
-    // - SendGrid for email
-    // - Nodemailer for SMTP
-    // - AWS SES for email service
-    // - Slack/Discord webhooks for notifications
-
-//     // Simulate email sending (replace with actual implementation)
+    // Send email notification
     const emailSent = await simulateEmailSending({
       name,
       email,
       subject,
       message,
       userIP,
-      timestamp
+      timestamp,
+      messageId: contactMessage._id
     });
 
     if (emailSent) {
@@ -134,6 +140,20 @@ router.get('/info', (req, res) => {
 
 async function simulateEmailSending(formData) {
   try {
+    // Always try to send actual email in development and production
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.log('📧 Email credentials not configured. Please set EMAIL_USER and EMAIL_PASS in .env file');
+      console.log('📧 Email simulation:', {
+        to: 'suyashmishraa983@gmail.com',
+        subject: `Portfolio Contact: ${formData.subject || 'No Subject'}`,
+        from: formData.email,
+        name: formData.name,
+        message: formData.message
+      });
+      return true; // Return true for development
+    }
+
+    // Create nodemailer transporter
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -142,28 +162,69 @@ async function simulateEmailSending(formData) {
       }
     });
 
+    // Email content
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: `"Portfolio Contact Form" <${process.env.EMAIL_USER}>`,
       to: 'suyashmishraa983@gmail.com',
-      subject: `Portfolio Contact: ${formData.subject}`,
+      subject: `Portfolio Contact: ${formData.subject || 'Message from ' + formData.name}`,
       html: `
-        <h3>New Contact Form Submission</h3>
-        <p><strong>Name:</strong> ${formData.name}</p>
-        <p><strong>Email:</strong> ${formData.email}</p>
-        <p><strong>Subject:</strong> ${formData.subject}</p>
-        <p><strong>Message:</strong></p>
-        <p>${formData.message.replace(/\n/g, '<br>')}</p>
-        <hr>
-        <p><small>Submitted from IP: ${formData.userIP} at ${formData.timestamp}</small></p>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px;">
+            New Contact Form Submission
+          </h2>
+          
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
+            <p><strong>Name:</strong> ${formData.name}</p>
+            <p><strong>Email:</strong> <a href="mailto:${formData.email}">${formData.email}</a></p>
+            ${formData.subject ? `<p><strong>Subject:</strong> ${formData.subject}</p>` : ''}
+          </div>
+          
+          <div style="background: #fff; padding: 20px; border: 1px solid #dee2e6; border-radius: 5px;">
+            <h4 style="color: #495057; margin-top: 0;">Message:</h4>
+            <p style="line-height: 1.6; color: #6c757d;">
+              ${formData.message.replace(/\n/g, '<br>')}
+            </p>
+          </div>
+          
+          <hr style="margin: 30px 0; border: none; border-top: 1px solid #dee2e6;">
+          
+          <div style="font-size: 12px; color: #6c757d;">
+            <p>
+              <strong>Submission Details:</strong><br>
+              IP Address: ${formData.userIP}<br>
+              Timestamp: ${formData.timestamp.toLocaleString()}
+            </p>
+            <p>
+              <em>This email was sent from your portfolio contact form.</em>
+            </p>
+          </div>
+        </div>
+      `,
+      // Also send a plain text version
+      text: `
+New Contact Form Submission
+
+Name: ${formData.name}
+Email: ${formData.email}
+Subject: ${formData.subject || 'No Subject'}
+
+Message:
+${formData.message}
+
+---
+Submission Details:
+IP: ${formData.userIP}
+Time: ${formData.timestamp.toLocaleString()}
       `
     };
 
     await transporter.sendMail(mailOptions);
+    console.log('📧 Email sent successfully to suyashmishraa983@gmail.com');
     return true;
 
   } catch (error) {
-    console.error('Email sending error:', error);
-    return false;
+    console.error('📧 Email sending error:', error);
+    return false; // Return false to indicate an error occurred
   }
 }
 

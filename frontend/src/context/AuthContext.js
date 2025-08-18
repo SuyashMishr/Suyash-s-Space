@@ -12,8 +12,8 @@ export const useAuth = () => {
   return context;
 };
 
-// Configure axios defaults
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:4000/api';
+// Configure axios defaults - Fixed the baseURL
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 axios.defaults.withCredentials = true;
 
 export const AuthProvider = ({ children }) => {
@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
-      const response = await axios.get('/auth/verify');
+      const response = await axios.get('/api/auth/verify');
       if (response.data.success) {
         setUser(response.data.user);
         setIsAuthenticated(true);
@@ -72,29 +72,28 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       setLoading(true);
-      const response = await axios.post('/auth/login', credentials);
+      const response = await axios.post('/api/auth/login', credentials);
 
-      if (response.data.success) {
-        const { token, user } = response.data;
+      const { token, user: userData } = response.data;
 
-        // Store token
-        localStorage.setItem('portfolio-token', token);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      // Store token
+      localStorage.setItem('portfolio-token', token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        // Update state
-        setUser(user);
-        setIsAuthenticated(true);
+      // Update state
+      setUser(userData);
+      setIsAuthenticated(true);
 
-        toast.success('Login successful!');
-        return { success: true };
-      } else {
-        toast.error(response.data.message || 'Login failed');
-        return { success: false, message: response.data.message };
-      }
+      toast.success('Login successful!');
+      return { success: true };
     } catch (error) {
-      const message = error.response?.data?.message || 'Login failed';
+      const message = error.response?.data?.error || 'Login failed';
       toast.error(message);
-      return { success: false, message };
+      return { 
+        success: false, 
+        error: message,
+        lockTimeRemaining: error.response?.data?.lockTimeRemaining 
+      };
     } finally {
       setLoading(false);
     }

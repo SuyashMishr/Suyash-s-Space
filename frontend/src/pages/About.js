@@ -4,17 +4,22 @@ import { Award, MapPin, Calendar, Heart, Target, Lightbulb } from 'lucide-react'
 
 const About = () => {
   const [generalInfo, setGeneralInfo] = useState(null);
+  const [profileData, setProfileData] = useState(null);
   const [skills, setSkills] = useState(null);
 
   useEffect(() => {
     // Load data
+    const timestamp = new Date().getTime();
     Promise.all([
       fetch('/data/general_info.json').then(res => res.json()),
-      fetch('/data/skills.json').then(res => res.json())
+      fetch('/data/skills.json').then(res => res.json()),
+      fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/api/profile?t=${timestamp}`).then(res => res.json()).catch(() => ({}))
     ])
-    .then(([generalData, skillsData]) => {
+    .then(([generalData, skillsData, profileDataResult]) => {
+      console.log('About page - Profile data loaded:', profileDataResult);
       setGeneralInfo(generalData);
       setSkills(skillsData);
+      setProfileData(profileDataResult);
     })
     .catch(error => console.error('Error loading data:', error));
   }, []);
@@ -75,14 +80,36 @@ const About = () => {
           >
             <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 sticky top-8">
               <div className="text-center mb-8">
-                <div className="w-32 h-32 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center text-white text-4xl font-bold">
-                  SM
+                <div className="w-32 h-32 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center text-white text-4xl font-bold relative overflow-hidden">
+                  {profileData?.profilePhoto ? (
+                    <img 
+                      src={`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}${profileData.profilePhoto}?t=${Date.now()}`}
+                      alt={profileData.name || generalInfo?.name || 'Profile'}
+                      className="w-full h-full object-cover rounded-full"
+                      crossOrigin="anonymous"
+                      onLoad={() => console.log('Profile image loaded successfully')}
+                      onError={(e) => {
+                        console.log('Profile image failed to load:', e.target.src);
+                        e.target.style.display = 'none';
+                        if (e.target.nextSibling) {
+                          e.target.nextSibling.style.display = 'flex';
+                        }
+                      }}
+                      style={{ display: 'block' }}
+                    />
+                  ) : null}
+                  <div 
+                    className="absolute inset-0 flex items-center justify-center text-white text-4xl font-bold"
+                    style={{ display: profileData?.profilePhoto ? 'none' : 'flex' }}
+                  >
+                    {profileData?.name ? profileData.name.split(' ').map(n => n[0]).join('') : 'SM'}
+                  </div>
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                  {generalInfo.name}
+                  {profileData?.name || generalInfo.name}
                 </h2>
                 <p className="text-blue-600 dark:text-blue-400 font-medium mb-4">
-                  {generalInfo.title}
+                  {profileData?.position || generalInfo.title}
                 </p>
               </div>
 
