@@ -140,7 +140,9 @@ router.get('/info', (req, res) => {
 
 async function simulateEmailSending(formData) {
   try {
-    // Always try to send actual email in development and production
+    // In development, allow simulation if credentials are missing
+    const isProduction = process.env.NODE_ENV === 'production';
+
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
       console.log('📧 Email credentials not configured. Please set EMAIL_USER and EMAIL_PASS in .env file');
       console.log('📧 Email simulation:', {
@@ -150,7 +152,14 @@ async function simulateEmailSending(formData) {
         name: formData.name,
         message: formData.message
       });
-      return true; // Return true for development
+
+      // In production, treat missing credentials as a failure so you notice it
+      if (isProduction) {
+        return false;
+      }
+
+      // In development, simulate success so you can test the flow
+      return true;
     }
 
     // Create nodemailer transporter
