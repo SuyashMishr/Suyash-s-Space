@@ -109,6 +109,12 @@ const ChatBot = ({ onClose }) => {
         errorDetails = error.message;
       }
       
+      // Log detailed error information for debugging (not shown to users)
+      console.error('Chatbot request failed:', {
+        type: errorType,
+        details: errorDetails
+      });
+
       const errorMessage = {
         id: Date.now() + 2,
         type: 'bot',
